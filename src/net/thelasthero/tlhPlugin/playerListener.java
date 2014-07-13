@@ -1,10 +1,13 @@
 package net.thelasthero.tlhPlugin;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class playerListener implements Listener {
 
@@ -36,16 +39,51 @@ public class playerListener implements Listener {
 		if (!p.hasPlayedBefore()) {
 			// now send our welcome message
 			p.sendMessage(ChatColor.GREEN + "┌                                             ┐");
-			p.sendMessage(ChatColor.GREEN + " ");
 			p.sendMessage(ChatColor.GRAY + "          Welcome to " + ChatColor.DARK_GRAY + "the" + ChatColor.DARK_RED.toString() + ChatColor.BOLD.toString() + "Last" + ChatColor.RED + "Hero");
-			p.sendMessage(ChatColor.GREEN + "      Website: http://minetime.com.au");
 			p.sendMessage(ChatColor.GREEN + "     Vote: http://minetime.com.au/vote");
+			p.sendMessage(ChatColor.GREEN + "  Claim Land: http://thelasyhero.net/claiming");
 			p.sendMessage(ChatColor.GREEN + " ");
 			p.sendMessage(ChatColor.GREEN + "└                                             ┘");
 			
 			// teleport player to spawn/start location
 			p.teleport(pl.spawnLocation);
+			
+			
+			// Give new players some items
+			pl.giveItem(p.getName().toString(),Material.IRON_HELMET, 1, (short) 50, ChatColor.AQUA
+					+ "Hero's Starter Helm", ChatColor.RED + "Something to", ChatColor.RED
+					+ "help you get started");
 
+			pl.giveItem(p.getName().toString(),Material.IRON_CHESTPLATE, 1, (short) 50, ChatColor.AQUA
+					+ "Hero's Starter Chestplate", ChatColor.RED + "Something to", ChatColor.RED
+					+ "help you get started");
+
+			pl.giveItem(p.getName().toString(),Material.IRON_LEGGINGS, 1, (short) 50, ChatColor.AQUA
+					+ "Hero's Starter Leggings", ChatColor.RED + "Something to", ChatColor.RED
+					+ "help you get started");
+
+			pl.giveItem(p.getName().toString(),Material.IRON_BOOTS, 1, (short) 50, ChatColor.AQUA
+					+ "Hero's Starter Boots", ChatColor.RED + "Something to", ChatColor.RED
+					+ "help you get started");
+
+			pl.giveItem(p.getName().toString(),Material.IRON_SWORD, 1, (short) 50, ChatColor.AQUA
+					+ "Hero's Starter Sword", ChatColor.RED + "Something to", ChatColor.RED
+					+ "help you get started");
+
+			pl.giveItem(p.getName().toString(),Material.IRON_AXE, 1, (short) 50, ChatColor.AQUA
+					+ "Hero's Starter Axe", ChatColor.RED + "Something to", ChatColor.RED
+					+ "help you get started");
+
+			pl.giveItem(p.getName().toString(),Material.IRON_PICKAXE, 1, (short) 50, ChatColor.AQUA
+					+ "Hero's Starter Pickaxe", ChatColor.RED + "Something to", ChatColor.RED
+					+ "help you get started");
+
+			pl.giveItem(p.getName().toString(),Material.COOKED_BEEF, 12, (short) 50, ChatColor.AQUA
+					+ "Hero's Starter Food", ChatColor.RED + "Something to", ChatColor.RED
+					+ "help you get started");
+			
+			//player effect for new players joining
+			p.getWorld().playEffect(p.getLocation(), Effect.EXPLOSION_HUGE, 4);
 		} 
 			else
 		{
