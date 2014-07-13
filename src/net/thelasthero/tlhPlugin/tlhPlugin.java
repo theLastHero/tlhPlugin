@@ -110,21 +110,22 @@ public class tlhPlugin extends JavaPlugin {
 	public void giveItem(String player, Material material,
 			int amount, short data, String name, String... lore) {
 		
-		Player p = (Player) Bukkit.getPlayer(player);
+		if (Bukkit.getPlayer(player) instanceof Player && Bukkit.getPlayer(player).isOnline()) {
+			Player p = (Player) Bukkit.getPlayer(player);
 		
-		ItemStack stack = new ItemStack(material, amount, data);
-		ItemMeta meta = stack.getItemMeta();
-
-		meta.setDisplayName((name));
-
-		meta.setLore(Arrays.asList(lore));
-
-		stack.setItemMeta(meta);
-
-		p.getInventory().addItem(stack);
+			//create new stack
+			ItemStack stack = new ItemStack(material, amount, data);
+			
+			//set meta and lore data
+			ItemMeta meta = stack.getItemMeta();
+			meta.setDisplayName((name));
+			meta.setLore(Arrays.asList(lore));
+			stack.setItemMeta(meta);
 		
-		//HitSoundsInv.setItem(invPosition, stack);
-		//return stack;
+			//give item to player
+			p.getInventory().addItem(stack);
+		
+		}
 	}
 
 }
