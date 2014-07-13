@@ -1,0 +1,12 @@
+name: tlhPlugin
+version: 0.1.dev
+description: tlhPlugin
+author: judgetread
+authors: [judgetread] 
+website: http://thelasthero.net
+main: net.thelasthero.tlhPlugin.tlhPlugin
+
+commands:
+  spawn:
+    description: Send player to spawn
+    aliases: [sp]
