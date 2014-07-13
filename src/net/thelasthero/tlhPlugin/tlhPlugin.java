@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
+
 /* 
  * 
  * 
@@ -53,6 +54,8 @@ public class tlhPlugin extends JavaPlugin {
 		// Register playerListener
 		Bukkit.getServer().getPluginManager()
 				.registerEvents(new playerListener(this), this);
+		//register command listener for /spawn
+		getCommand("spawn").setExecutor(new commandListener(this));
 		
 		//set spawn point
 		spawnLocation = new Location(Bukkit.getWorld("World"), 1925.44311, 70, 955.21311, (float) -0.14778212, (float) 0);
