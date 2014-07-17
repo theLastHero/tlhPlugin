@@ -73,6 +73,7 @@ public class tlhPlugin extends JavaPlugin {
 				.registerEvents(new playerListener(this), this);
 		//register command listener for /spawn
 		getCommand("spawn").setExecutor(new commandListener(this));
+		getCommand("shops").setExecutor(new commandListener(this));
 		
 		//set spawn point
 		spawnLocation = new Location(Bukkit.getWorld("World"), 1925.44311, 77, 955.21311, (float) -0.14778212, (float) 0);
