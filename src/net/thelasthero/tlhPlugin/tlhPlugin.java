@@ -7,6 +7,11 @@ import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.World.Environment;
+import org.bukkit.WorldCreator;
+import org.bukkit.WorldType;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -70,7 +75,14 @@ public class tlhPlugin extends JavaPlugin {
 		getCommand("spawn").setExecutor(new commandListener(this));
 		
 		//set spawn point
-		spawnLocation = new Location(Bukkit.getWorld("World"), 1925.44311, 70, 955.21311, (float) -0.14778212, (float) 0);
+		spawnLocation = new Location(Bukkit.getWorld("World"), 1925.44311, 77, 955.21311, (float) -0.14778212, (float) 0);
+		
+		//load shop world
+		//World playerShops = this.getServer().createWorld(new WorldCreator(this.getConfig().getString("playerShops")));
+		if(getServer().getWorld("playerShops") == null)
+		{
+			Bukkit.createWorld(new WorldCreator("playerShops").type(WorldType.FLAT));
+		}
 	}
 	
 	
@@ -105,10 +117,10 @@ public class tlhPlugin extends JavaPlugin {
 	
 	
 	// -------------------------------------------------------------------------------------
-	// createItem
+	// giveItem
 	// -------------------------------------------------------------------------------------
 	public void giveItem(String player, Material material,
-			int amount, short data, String name, String... lore) {
+			int amount, short data, Enchantment enchant, int enchantLevel, String name, String... lore) {
 		
 		if (Bukkit.getPlayer(player) instanceof Player && Bukkit.getPlayer(player).isOnline()) {
 			Player p = (Player) Bukkit.getPlayer(player);
@@ -121,6 +133,11 @@ public class tlhPlugin extends JavaPlugin {
 			meta.setDisplayName((name));
 			meta.setLore(Arrays.asList(lore));
 			stack.setItemMeta(meta);
+			
+			//add enchantments
+			if(!(enchant == null)){
+				stack.addEnchantment(enchant, enchantLevel);
+			}
 		
 			//give item to player
 			p.getInventory().addItem(stack);

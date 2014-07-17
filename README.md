@@ -21,6 +21,15 @@ Added first join kit
 
 Added effect on player @ first join
 
+Added Cancel player quit message
+
+
+[- 18/july/2014 -]
+Create/load new world playerShops
+
+Added /shops command to tp to playerShops world
+
+
 
  === TODO ===
 

@@ -1,5 +1,7 @@
 package net.thelasthero.tlhPlugin;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -28,6 +30,13 @@ public class commandListener implements CommandExecutor{
 			p.teleport(pl.spawnLocation);
 			return true;
 		}
+		
+		if (cmd.getName().equalsIgnoreCase("shops")) {
+			p.teleport(new Location(Bukkit.getWorld("playerShops"), 0, 101, 0));
+			return true;
+		}
+		
+		
 		return false;
 	}
 
