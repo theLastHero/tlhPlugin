@@ -40,7 +40,7 @@ public class tlhPlugin extends JavaPlugin {
 	
 	// locations
 	// -----------
-	public Location spawnLocation;
+	public Location spawnLocation, shopSpawnA, shopSpawnB, shopSpawnC;
 
 	// others
 	//-------
@@ -78,12 +78,12 @@ public class tlhPlugin extends JavaPlugin {
 		//set spawn point
 		spawnLocation = new Location(Bukkit.getWorld("World"), 1925.44311, 77, 955.21311, (float) -0.14778212, (float) 0);
 		
-		//load shop world
-		//World playerShops = this.getServer().createWorld(new WorldCreator(this.getConfig().getString("playerShops")));
-		if(getServer().getWorld("playerShops") == null)
-		{
-			Bukkit.createWorld(new WorldCreator("playerShops").type(WorldType.FLAT));
-		}
+		//set shop spawn locations
+		shopSpawnA = new Location(Bukkit.getWorld("playerShops"), 0, 66, 0, (float) -0.14778212, (float) 0);
+		shopSpawnB = new Location(Bukkit.getWorld("playerShops"), 0, 66, 0, (float) -0.14778212, (float) 0);
+		shopSpawnC = new Location(Bukkit.getWorld("playerShops"), 0, 66, 0, (float) -0.14778212, (float) 0);
+		
+		
 	}
 	
 	

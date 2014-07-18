@@ -32,7 +32,7 @@ public class commandListener implements CommandExecutor{
 		}
 		
 		if (cmd.getName().equalsIgnoreCase("shops")) {
-			p.teleport(new Location(Bukkit.getWorld("playerShops"), 0, 101, 0));
+			p.teleport(pl.shopSpawnA);
 			return true;
 		}
 		

@@ -10,6 +10,6 @@ commands:
   spawn:
     description: Send player to spawn
     aliases: [sp]
-  shops
+  shops:
     description: send player to shops world
     aliases: [sh]
