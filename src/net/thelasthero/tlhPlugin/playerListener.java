@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -22,6 +23,36 @@ public class playerListener implements Listener {
 		pl = plugin;
 	}
 	
+	
+	 @EventHandler
+	 public void ChatStuff(AsyncPlayerChatEvent event){
+	 Player player = event.getPlayer();
+	 String message = event.getMessage();
+	 //event.setCancelled(true);
+	 if(player.hasPermission("thelasthero.thief")){
+		 player.setDisplayName(pl.thiefPrefix +  player.getName() + ChatColor.WHITE);
+	 }
+	 
+	 if(player.hasPermission("thelasthero.citizen")){
+		 player.setDisplayName(pl.citizenPrefix +  player.getName() + ChatColor.WHITE);
+	 }
+	 if(player.hasPermission("thelasthero.protector")){
+		 player.setDisplayName(pl.protectorPrefix +  player.getName() + ChatColor.WHITE);
+	 }
+	 if(player.hasPermission("thelasthero.doctor")){
+		 player.setDisplayName(pl.doctorPrefix +  player.getName() + ChatColor.WHITE);
+	 }
+	 if(player.hasPermission("thelasthero.leader")){
+		 player.setDisplayName(pl.leaderPrefix +  player.getName() + ChatColor.WHITE);
+	 }
+	 if(player.hasPermission("thelasthero.hero")){
+		 player.setDisplayName(pl.heroPrefix +  player.getName() + ChatColor.WHITE);
+	 }
+	 
+	 return;
+	 }
+
+	 
 	// -------------------------------------------------------------------------------------
 	// onPlayerJoin - Fires when a player logins into the server.
 	// -------------------------------------------------------------------------------------
@@ -31,9 +62,9 @@ public class playerListener implements Listener {
 	// * Mute player from sending or receive chat during show message time
 	// * Teleport player to spawn location if first login
 	// * Give first join players kit/items
-	@EventHandler(priority = EventPriority.LOWEST)
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerJoinEvent(PlayerJoinEvent e) {
-
+		
 		// set the join message to null, don't display a message
 		e.setJoinMessage(null);
 

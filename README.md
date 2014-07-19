@@ -25,14 +25,14 @@ Added Cancel player quit message
 
 
 [- 18/july/2014 -]
-Create/load new world playerShops
-REMOVED ABOVE ^ as world is already now created
 
 Added /shops command to tp to playerShops world
 
 added some playerShops locations hardcoded
 
+[- 19/july/2014 -]
 
+Added tlh rank prefix's into plugin/ remove from pex file, in readyness for new features
 
  === TODO ===
 

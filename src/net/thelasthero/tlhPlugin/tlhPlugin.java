@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -42,6 +43,13 @@ public class tlhPlugin extends JavaPlugin {
 	// -----------
 	public Location spawnLocation, shopSpawnA, shopSpawnB, shopSpawnC;
 
+	String thiefPrefix = ChatColor.GRAY.toString() + "[" + ChatColor.WHITE.toString() + "Thief" + ChatColor.GRAY.toString() + "] ";
+	String citizenPrefix = ChatColor.GRAY.toString() + "[" + ChatColor.DARK_PURPLE.toString() + "Citizen" + ChatColor.GRAY.toString() + "] ";
+	String protectorPrefix = ChatColor.GRAY.toString() + "[" + ChatColor.RED.toString() + "Protector" + ChatColor.GRAY.toString() + "] ";
+	String doctorPrefix = ChatColor.GRAY.toString() + "[" + ChatColor.BLUE.toString() + "Doctor" + ChatColor.GRAY.toString() + "] ";
+	String leaderPrefix = ChatColor.GRAY.toString() + "[" + ChatColor.YELLOW.toString() + "Leader" + ChatColor.GRAY.toString() + "] ";
+	String heroPrefix = ChatColor.GRAY.toString() + "[" + ChatColor.GREEN.toString() + "Hero" + ChatColor.GRAY.toString() + "] ";
+	
 	// others
 	//-------
 	public static tlhPlugin instance;
@@ -79,10 +87,17 @@ public class tlhPlugin extends JavaPlugin {
 		spawnLocation = new Location(Bukkit.getWorld("World"), 1925.44311, 77, 955.21311, (float) -0.14778212, (float) 0);
 		
 		//set shop spawn locations
-		shopSpawnA = new Location(Bukkit.getWorld("playerShops"), 0, 66, 0, (float) -0.14778212, (float) 0);
-		shopSpawnB = new Location(Bukkit.getWorld("playerShops"), 0, 66, 0, (float) -0.14778212, (float) 0);
-		shopSpawnC = new Location(Bukkit.getWorld("playerShops"), 0, 66, 0, (float) -0.14778212, (float) 0);
-		
+		//shopSpawnA = new Location(Bukkit.getWorld("playerShops"), 0, 66, 0, (float) -0.14778212, (float) 0);
+		//shopSpawnB = new Location(Bukkit.getWorld("playerShops"), 0, 66, 0, (float) -0.14778212, (float) 0);
+		//shopSpawnC = new Location(Bukkit.getWorld("playerShops"), 0, 66, 0, (float) -0.14778212, (float) 0);
+
+		// Strings
+		thiefPrefix = ChatColor.GRAY.toString() + "[" + ChatColor.WHITE.toString() + "Thief" + ChatColor.GRAY.toString() + "] "+ ChatColor.WHITE.toString();
+		citizenPrefix = ChatColor.GRAY.toString() + "[" + ChatColor.DARK_PURPLE.toString() + "Citizen" + ChatColor.GRAY.toString() + "] "+ ChatColor.WHITE.toString();
+		protectorPrefix = ChatColor.GRAY.toString() + "[" + ChatColor.RED.toString() + "Protector" + ChatColor.GRAY.toString() + "] "+ ChatColor.WHITE.toString();
+		doctorPrefix = ChatColor.GRAY.toString() + "[" + ChatColor.BLUE.toString() + "Doctor" + ChatColor.GRAY.toString() + "] "+ ChatColor.WHITE.toString();
+		leaderPrefix = ChatColor.GRAY.toString() + "[" + ChatColor.YELLOW.toString() + "Leader" + ChatColor.GRAY.toString() + "] "+ ChatColor.WHITE.toString();
+		heroPrefix = ChatColor.GRAY.toString() + "[" + ChatColor.GREEN.toString() + "Hero" + ChatColor.GRAY.toString() + "] "+ ChatColor.WHITE.toString();
 		
 	}
 	

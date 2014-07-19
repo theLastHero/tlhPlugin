@@ -13,3 +13,23 @@ commands:
   shops:
     description: send player to shops world
     aliases: [sh]
+  
+permissions:
+  thelasthero.thief:
+    description: blahblah
+    default: false
+  thelasthero.citizen:
+    description: blahblah
+    default: false
+  thelasthero.protector:
+    description: blahblah
+    default: false
+  thelasthero.doctor:
+    description: blahblah
+    default: false
+  thelasthero.leader:
+    description: blahblah
+    default: false
+  thelasthero.hero:
+    description: blahblah
+    default: false
