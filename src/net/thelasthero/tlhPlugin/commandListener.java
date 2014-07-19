@@ -90,6 +90,11 @@ public class commandListener implements CommandExecutor{
 			return true;
 		}
 		
+		if (cmd.getName().equalsIgnoreCase("test")) {
+			p.sendMessage("♥");
+			
+		}
+		
 		
 		return false;
 	}

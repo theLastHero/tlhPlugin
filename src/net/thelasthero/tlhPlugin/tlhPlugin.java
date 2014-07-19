@@ -25,6 +25,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.kitteh.tag.TagAPI;
 
 
 /* 
@@ -98,6 +99,7 @@ public class tlhPlugin extends JavaPlugin {
 		getCommand("spawn").setExecutor(new commandListener(this));
 		getCommand("shops").setExecutor(new commandListener(this));
 		getCommand("namecolor").setExecutor(new commandListener(this));
+		getCommand("test").setExecutor(new commandListener(this));
 		
 		//set spawn point
 		spawnLocation = new Location(Bukkit.getWorld("World"), 1925.44311, 77, 955.21311, (float) -0.14778212, (float) 0);
@@ -234,6 +236,16 @@ public class tlhPlugin extends JavaPlugin {
 		 
 		 //set displayName
 		 p.setDisplayName(namePrefix + pName + p.getName().toString() + ChatColor.WHITE);	 
+		 
+		 String tabName = pName + p.getName().toString();
+		 
+		 if (tabName.length() > 16){
+			 tabName = tabName.substring(0, 16);
+			}
+		 
+		 p.setPlayerListName(tabName);
+		 TagAPI.refreshPlayer(p);
+		 
 		 
 			try {
 				SLAPI.save(nameColor,"plugins/thelasthero/example.bin");

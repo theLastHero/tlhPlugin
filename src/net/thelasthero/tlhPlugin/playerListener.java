@@ -14,6 +14,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
+import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
+import org.kitteh.tag.PlayerReceiveNameTagEvent;
 
 public class playerListener implements Listener {
 
@@ -90,8 +92,6 @@ public class playerListener implements Listener {
 		// set player
 		final Player p = e.getPlayer();
 		
-		//setup playerDisplayName
-		pl.setUserDisplayName(p.getName());
 		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(pl, new Runnable() {
 			  public void run() {
@@ -181,7 +181,9 @@ public class playerListener implements Listener {
 		// p.setSaturation(20);
 		// p.setFoodLevel(20);
 		// p.setExhaustion(0);
-		
+
+		//setup playerDisplayName
+		pl.setUserDisplayName(p.getName());
 		}
 		}, 5);
 
@@ -205,6 +207,13 @@ public class playerListener implements Listener {
     public boolean playerRespawn(PlayerRespawnEvent event) {
     event.setRespawnLocation(pl.spawnLocation);
 	return false;
+    }
+    
+    @EventHandler
+    public void onNameTag(PlayerReceiveNameTagEvent event) {
+        if (pl.nameColor.containsKey(event.getNamedPlayer().getName())) { //See if a tag is defined
+            event.setTag(pl.convertColor(pl.nameColor.get(event.getNamedPlayer().getName())) + event.getNamedPlayer().getName()); //Set new tag -- RED is debug
+        }
     }
 	
 	

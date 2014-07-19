@@ -39,6 +39,8 @@ Added tlh rank prefix's into plugin/ remove from pex file, in readyness for new 
 Added /namecolor command to change a users name color
 Added permission for /namecolor
 
+/namecolor changes tablist color and nameTag of player
+
  === TODO ===
 
 -Change join messages

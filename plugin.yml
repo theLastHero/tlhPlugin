@@ -16,7 +16,10 @@ commands:
   namecolor:
     description: changes a player name color
     aliases: [nc]
-  
+  test:
+    description: test command
+    aliases: [te]
+
 permissions:
   thelasthero.thief:
     description: blahblah
