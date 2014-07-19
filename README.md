@@ -34,6 +34,11 @@ added some playerShops locations hardcoded
 
 Added tlh rank prefix's into plugin/ remove from pex file, in readyness for new features
 
+[- 20/july/2014 -]
+
+Added /namecolor command to change a users name color
+Added permission for /namecolor
+
  === TODO ===
 
 -Change join messages

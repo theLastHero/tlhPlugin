@@ -24,34 +24,53 @@ public class playerListener implements Listener {
 	}
 	
 	
+	
+/*
 	 @EventHandler
 	 public void ChatStuff(AsyncPlayerChatEvent event){
-	 Player player = event.getPlayer();
-	 String message = event.getMessage();
-	 //event.setCancelled(true);
-	 if(player.hasPermission("thelasthero.thief")){
-		 player.setDisplayName(pl.thiefPrefix +  player.getName() + ChatColor.WHITE);
+	 Player p = event.getPlayer();
+	 
+	 String pName = p.getName();
+	 
+	 if (pl.nameColor.containsKey(pName)){
+		 if (pl.nameColor.get(pName).equalsIgnoreCase("red")){
+			 pName = ChatColor.RED.toString() + pName;
+		 } else if (pl.nameColor.get(pName).equalsIgnoreCase("white")){
+			 pName = ChatColor.WHITE.toString() + pName;
+		 } else if (pl.nameColor.get(pName).equalsIgnoreCase("yellow")){
+			 pName = ChatColor.YELLOW.toString() + pName;
+		 } else if (pl.nameColor.get(pName).equalsIgnoreCase("aqua")){
+			 pName = ChatColor.AQUA.toString() + pName;
+		 }
+		 
+		 
 	 }
 	 
-	 if(player.hasPermission("thelasthero.citizen")){
-		 player.setDisplayName(pl.citizenPrefix +  player.getName() + ChatColor.WHITE);
+	 
+	 String message = event.getMessage();
+	 //event.setCancelled(true);
+	 if(p.hasPermission("thelasthero.thief")){
+		 p.setDisplayName(pl.thiefPrefix +  pName + ChatColor.WHITE);
 	 }
-	 if(player.hasPermission("thelasthero.protector")){
-		 player.setDisplayName(pl.protectorPrefix +  player.getName() + ChatColor.WHITE);
+	 if(p.hasPermission("thelasthero.citizen")){
+		 p.setDisplayName(pl.citizenPrefix +  pName + ChatColor.WHITE);
 	 }
-	 if(player.hasPermission("thelasthero.doctor")){
-		 player.setDisplayName(pl.doctorPrefix +  player.getName() + ChatColor.WHITE);
+	 if(p.hasPermission("thelasthero.protector")){
+		 p.setDisplayName(pl.protectorPrefix +  pName + ChatColor.WHITE);
 	 }
-	 if(player.hasPermission("thelasthero.leader")){
-		 player.setDisplayName(pl.leaderPrefix +  player.getName() + ChatColor.WHITE);
+	 if(p.hasPermission("thelasthero.doctor")){
+		 p.setDisplayName(pl.doctorPrefix +  pName + ChatColor.WHITE);
 	 }
-	 if(player.hasPermission("thelasthero.hero")){
-		 player.setDisplayName(pl.heroPrefix +  player.getName() + ChatColor.WHITE);
+	 if(p.hasPermission("thelasthero.leader")){
+		 p.setDisplayName(pl.leaderPrefix +  pName + ChatColor.WHITE);
+	 }
+	 if(p.hasPermission("thelasthero.hero")){
+		 p.setDisplayName(pl.heroPrefix +  pName + ChatColor.WHITE);
 	 }
 	 
 	 return;
 	 }
-
+*/
 	 
 	// -------------------------------------------------------------------------------------
 	// onPlayerJoin - Fires when a player logins into the server.
@@ -70,6 +89,9 @@ public class playerListener implements Listener {
 
 		// set player
 		final Player p = e.getPlayer();
+		
+		//setup playerDisplayName
+		pl.setUserDisplayName(p.getName());
 		
 		Bukkit.getScheduler().scheduleSyncDelayedTask(pl, new Runnable() {
 			  public void run() {

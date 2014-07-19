@@ -13,6 +13,9 @@ commands:
   shops:
     description: send player to shops world
     aliases: [sh]
+  namecolor:
+    description: changes a player name color
+    aliases: [nc]
   
 permissions:
   thelasthero.thief:
@@ -31,5 +34,8 @@ permissions:
     description: blahblah
     default: false
   thelasthero.hero:
+    description: blahblah
+    default: false
+  thelasthero.namecolor:
     description: blahblah
     default: false
