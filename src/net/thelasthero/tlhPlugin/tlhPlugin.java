@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -40,8 +41,8 @@ public class tlhPlugin extends JavaPlugin {
 	
 	// hashmaps
 	// ----------
-	public Map<String, Long> muted = new HashMap<String, Long>();// mute list hashmap
-	public HashMap<String, String> nameColor = new HashMap<String, String>();// mute list hashmap
+	public Map<UUID, Long> muted = new HashMap<UUID, Long>();// mute list hashmap
+	public HashMap<UUID, String> nameColor = new HashMap<UUID, String>();// mute list hashmap
 		
 	// longs & ints
 	// ---------------
@@ -128,7 +129,7 @@ public class tlhPlugin extends JavaPlugin {
 		nameColorLists.add("dark_red");
 		
 		 try {
-				nameColor = SLAPI.load("plugins/thelasthero/example.bin");
+				nameColor = SLAPI.load("plugins/thelasthero/namecolor.bin");
 		            } catch(Exception e) {
 		                //handle the exception
 		                e.printStackTrace();
@@ -140,8 +141,8 @@ public class tlhPlugin extends JavaPlugin {
 	// -------------------------------------------------------------------------------------
 	// muteChat
 	// -------------------------------------------------------------------------------------
-	public void muteChat(Player player, long delay) {
-		muted.put(player.getName(), System.currentTimeMillis() + delay);
+	public void muteChat(Player p, long delay) {
+		muted.put(p.getUniqueId(), System.currentTimeMillis() + delay);
 	}
 	
 	
@@ -170,11 +171,11 @@ public class tlhPlugin extends JavaPlugin {
 	// -------------------------------------------------------------------------------------
 	// giveItem
 	// -------------------------------------------------------------------------------------
-	public void giveItem(String player, Material material,
+	public void giveItem(UUID uuid, Material material,
 			int amount, short data, Enchantment enchant, int enchantLevel, String name, String... lore) {
 		
-		if (Bukkit.getPlayer(player) instanceof Player && Bukkit.getPlayer(player).isOnline()) {
-			Player p = (Player) Bukkit.getPlayer(player);
+		if (Bukkit.getServer().getPlayer(uuid) instanceof Player && Bukkit.getServer().getPlayer(uuid).isOnline()) {
+			Player p = Bukkit.getServer().getPlayer(uuid);
 		
 			//create new stack
 			ItemStack stack = new ItemStack(material, amount, data);
@@ -200,9 +201,9 @@ public class tlhPlugin extends JavaPlugin {
 	// -------------------------------------------------------------------------------------
 	// setUserDisplayName
 	// -------------------------------------------------------------------------------------
-	public void setUserDisplayName(String playerName){
+	public void setUserDisplayName(UUID uuid){
 		
-		Player p = Bukkit.getPlayer(playerName);
+		Player p = Bukkit.getServer().getPlayer(uuid);
 		
 		//setup prefix
 		String namePrefix = thiefPrefix;
@@ -229,8 +230,8 @@ public class tlhPlugin extends JavaPlugin {
 		 //setup nameColor
 		 String pName = "";
 		 
-		 if (nameColor.containsKey(p.getName())){
-			 pName = convertColor(nameColor.get(p.getName()));
+		 if (nameColor.containsKey(p.getUniqueId())){
+			 pName = convertColor(nameColor.get(p.getUniqueId()));
 		 } else {
 		 }
 		 
@@ -248,7 +249,7 @@ public class tlhPlugin extends JavaPlugin {
 		 
 		 
 			try {
-				SLAPI.save(nameColor,"plugins/thelasthero/example.bin");
+				SLAPI.save(nameColor,"plugins/thelasthero/namecolor.bin");
 		            } catch(Exception e) {
 		                 e.printStackTrace();
 		            }
@@ -300,7 +301,7 @@ public class tlhPlugin extends JavaPlugin {
 	}
 	
 	
-	public void save(HashMap<String, String> nameColor, String path) {
+	public void save(HashMap<UUID, String> nameColor, String path) {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
 			oos.writeObject(nameColor);

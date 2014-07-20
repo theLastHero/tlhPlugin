@@ -41,6 +41,11 @@ Added permission for /namecolor
 
 /namecolor changes tablist color and nameTag of player
 
+Added UUID support
+
+Update build to 1.7.10
+
+
  === TODO ===
 
 -Change join messages

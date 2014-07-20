@@ -66,17 +66,17 @@ public class commandListener implements CommandExecutor{
 					
 						//put into hashmap  name/color
 						if(args[0].equalsIgnoreCase("reset")){
-							pl.nameColor.put(p.getName(), "light_gray");
+							pl.nameColor.put(p.getUniqueId(), "light_gray");
 							p.sendMessage(ChatColor.GREEN + "Your name color has been reset");
 							
 						} else {
-							pl.nameColor.put(p.getName(), args[0]);
+							pl.nameColor.put(p.getUniqueId(), args[0]);
 							//send user a message
 							p.sendMessage(ChatColor.GREEN + "Your name color has been change to: " + pl.convertColor(args[0]) + args[0]);
 						}
 					
 						//set users displayName
-						pl.setUserDisplayName(p.getName());
+						pl.setUserDisplayName(p.getUniqueId());
 					
 						
 					} else {

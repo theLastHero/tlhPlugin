@@ -119,44 +119,44 @@ public class playerListener implements Listener {
 			
 			
 			// Give new players some items
-			pl.giveItem(p.getName().toString(),Material.IRON_HELMET, 1, (short) 0, Enchantment.PROTECTION_ENVIRONMENTAL, 2, ChatColor.AQUA
+			pl.giveItem(p.getUniqueId(),Material.IRON_HELMET, 1, (short) 0, Enchantment.PROTECTION_ENVIRONMENTAL, 2, ChatColor.AQUA
 					+ "Hero's Starter Helm", ChatColor.RED + "Something to", ChatColor.RED
 					+ "help you get started");
 
-			pl.giveItem(p.getName().toString(),Material.IRON_CHESTPLATE, 1, (short) 0, Enchantment.PROTECTION_ENVIRONMENTAL, 2, ChatColor.AQUA
+			pl.giveItem(p.getUniqueId(),Material.IRON_CHESTPLATE, 1, (short) 0, Enchantment.PROTECTION_ENVIRONMENTAL, 2, ChatColor.AQUA
 					+ "Hero's Starter Chestplate", ChatColor.RED + "Something to", ChatColor.RED
 					+ "help you get started");
 
-			pl.giveItem(p.getName().toString(),Material.IRON_LEGGINGS, 1, (short) 0, Enchantment.PROTECTION_ENVIRONMENTAL, 2, ChatColor.AQUA
+			pl.giveItem(p.getUniqueId(),Material.IRON_LEGGINGS, 1, (short) 0, Enchantment.PROTECTION_ENVIRONMENTAL, 2, ChatColor.AQUA
 					+ "Hero's Starter Leggings", ChatColor.RED + "Something to", ChatColor.RED
 					+ "help you get started");
 
-			pl.giveItem(p.getName().toString(),Material.IRON_BOOTS, 1, (short) 0, Enchantment.PROTECTION_ENVIRONMENTAL, 2, ChatColor.AQUA
+			pl.giveItem(p.getUniqueId(),Material.IRON_BOOTS, 1, (short) 0, Enchantment.PROTECTION_ENVIRONMENTAL, 2, ChatColor.AQUA
 					+ "Hero's Starter Boots", ChatColor.RED + "Something to", ChatColor.RED
 					+ "help you get started");
 
-			pl.giveItem(p.getName().toString(),Material.IRON_SWORD, 1, (short) 0, Enchantment.DAMAGE_ALL, 2, ChatColor.AQUA
+			pl.giveItem(p.getUniqueId(),Material.IRON_SWORD, 1, (short) 0, Enchantment.DAMAGE_ALL, 2, ChatColor.AQUA
 					+ "Hero's Starter Sword", ChatColor.RED + "Something to", ChatColor.RED
 					+ "help you get started");
 
-			pl.giveItem(p.getName().toString(),Material.IRON_AXE, 1, (short) 0, Enchantment.DIG_SPEED, 2, ChatColor.AQUA
+			pl.giveItem(p.getUniqueId(),Material.IRON_AXE, 1, (short) 0, Enchantment.DIG_SPEED, 2, ChatColor.AQUA
 					+ "Hero's Starter Axe", ChatColor.RED + "Something to", ChatColor.RED
 					+ "help you get started");
 
-			pl.giveItem(p.getName().toString(),Material.IRON_PICKAXE, 1, (short) 0, Enchantment.DURABILITY, 2, ChatColor.AQUA
+			pl.giveItem(p.getUniqueId(),Material.IRON_PICKAXE, 1, (short) 0, Enchantment.DURABILITY, 2, ChatColor.AQUA
 					+ "Hero's Starter Pickaxe", ChatColor.RED + "Something to", ChatColor.RED
 					+ "help you get started");
 
-			pl.giveItem(p.getName().toString(),Material.COOKED_BEEF, 12, (short) 0, null, 0, ChatColor.AQUA
+			pl.giveItem(p.getUniqueId(),Material.COOKED_BEEF, 12, (short) 0, null, 0, ChatColor.AQUA
 					+ "Hero's Starter Food", ChatColor.RED + "Something to", ChatColor.RED
 					+ "help you get started");
 			
-			pl.giveItem(p.getName().toString(),Material.GOLD_SPADE, 1, (short) 0, null, 0, ChatColor.AQUA
+			pl.giveItem(p.getUniqueId(),Material.GOLD_SPADE, 1, (short) 0, null, 0, ChatColor.AQUA
 					+ " ", ChatColor.RED + "Something to", ChatColor.RED
 					+ " ");
 			
 			//player effect for new players joining
-			p.getWorld().playEffect(p.getLocation(), Effect.EXPLOSION_LARGE, 0);
+			p.getWorld().playEffect(p.getLocation(), Effect.SMOKE, 0);
 			//ParticleEffect.HEART.display(p.getLocation(), 0, 1, 0, 5, 10);
 			
 		} 
@@ -183,7 +183,7 @@ public class playerListener implements Listener {
 		// p.setExhaustion(0);
 
 		//setup playerDisplayName
-		pl.setUserDisplayName(p.getName());
+		pl.setUserDisplayName(p.getUniqueId());
 		}
 		}, 5);
 
