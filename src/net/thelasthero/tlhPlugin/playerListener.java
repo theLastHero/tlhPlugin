@@ -210,9 +210,9 @@ public class playerListener implements Listener {
     }
     
     @EventHandler
-    public void onNameTag(PlayerReceiveNameTagEvent event) {
-        if (pl.nameColor.containsKey(event.getNamedPlayer().getName())) { //See if a tag is defined
-            event.setTag(pl.convertColor(pl.nameColor.get(event.getNamedPlayer().getName())) + event.getNamedPlayer().getName()); //Set new tag -- RED is debug
+    public void onNameTag(AsyncPlayerReceiveNameTagEvent event) {
+        if (pl.nameColor.containsKey(event.getNamedPlayer().getUniqueId())) { //See if a tag is defined
+            event.setTag(pl.convertColor(pl.nameColor.get(event.getNamedPlayer().getUniqueId())) + event.getNamedPlayer().getName()); 
         }
     }
 	

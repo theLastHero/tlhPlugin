@@ -40,6 +40,7 @@ Added /namecolor command to change a users name color
 Added permission for /namecolor
 
 /namecolor changes tablist color and nameTag of player
+removed black from color list
 
 Added UUID support
 

@@ -52,7 +52,7 @@ public class commandListener implements CommandExecutor{
 				p.sendMessage(ChatColor.GREEN + "/namecolor reset <- Reset to white.");
 		        p.sendMessage(ChatColor.GREEN + "/namecolor <COLOR> <- Change to color.");
 		        p.sendMessage(ChatColor.WHITE + "Colors: " + ChatColor.AQUA + "aqua, " + 
-		            ChatColor.BLACK + "black, " + ChatColor.BLUE + "blue, " + 
+		            ChatColor.BLUE + "blue, " + 
 		            ChatColor.GOLD + "gold, " + ChatColor.GRAY + "gray, " + 
 		            ChatColor.GREEN + "green, " + ChatColor.RED + "red, " + 
 		            ChatColor.YELLOW + "yellow, " + ChatColor.WHITE + "white, " + 

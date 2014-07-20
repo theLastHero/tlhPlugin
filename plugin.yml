@@ -5,6 +5,7 @@ author: judgetread
 authors: [judgetread] 
 website: http://thelasthero.net
 main: net.thelasthero.tlhPlugin.tlhPlugin
+Depends: [TagAPI]
 
 commands:
   spawn:

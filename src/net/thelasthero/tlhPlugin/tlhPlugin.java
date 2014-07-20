@@ -112,7 +112,6 @@ public class tlhPlugin extends JavaPlugin {
 
 		//list of color names for /namecolor command
 		nameColorLists.add("aqua");
-		nameColorLists.add("black");
 		nameColorLists.add("blue");
 		nameColorLists.add("gold");
 		nameColorLists.add("gray");
@@ -232,8 +231,7 @@ public class tlhPlugin extends JavaPlugin {
 		 
 		 if (nameColor.containsKey(p.getUniqueId())){
 			 pName = convertColor(nameColor.get(p.getUniqueId()));
-		 } else {
-		 }
+		 } 
 		 
 		 //set displayName
 		 p.setDisplayName(namePrefix + pName + p.getName().toString() + ChatColor.WHITE);	 
@@ -245,7 +243,8 @@ public class tlhPlugin extends JavaPlugin {
 			}
 		 
 		 p.setPlayerListName(tabName);
-		 TagAPI.refreshPlayer(p);
+		 
+		 TagAPI.refreshPlayer(p.getPlayer());
 		 
 		 
 			try {
