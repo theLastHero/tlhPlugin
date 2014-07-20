@@ -44,6 +44,42 @@ public class commandListener implements CommandExecutor{
 			return true;
 		}
 		
+		//nameicon command
+		if (cmd.getName().equalsIgnoreCase("nameicon")) {
+			if(args.length <=0){
+				p.sendMessage(ChatColor.DARK_GRAY + "the" + ChatColor.DARK_RED.toString() + ChatColor.BOLD.toString() + "Last" + ChatColor.RED + "Hero" + ChatColor.YELLOW + " - NameIcon");
+				p.sendMessage(ChatColor.GREEN + "--------------");
+				p.sendMessage(" ");
+				//p.sendMessage(ChatColor.GREEN + "/nameicon clear <- Clear your name icon.");
+		        p.sendMessage(ChatColor.GREEN + "/nameicon <ICON_NAME> <- Change name icon.");
+		        p.sendMessage(ChatColor.WHITE + "Icons: ");
+		        p.sendMessage(ChatColor.WHITE + pl.parseUTF8((String)"\u2665") + ChatColor.GRAY + " - heart    " 
+		        + ChatColor.WHITE + pl.parseUTF8((String)"\u2666") + ChatColor.GRAY + " - diamond    " 
+		        + ChatColor.WHITE + pl.parseUTF8((String)"\u2660") + ChatColor.GRAY + " - spade    " 
+		        + ChatColor.WHITE + pl.parseUTF8((String)"\u2663") + ChatColor.GRAY + " - club");
+		        
+		        p.sendMessage(ChatColor.WHITE + pl.parseUTF8((String)"\u263A") + ChatColor.GRAY + " - smiley    ");
+			
+			} else {
+				if(p.hasPermission("thelasthero.nameicon")){
+					if(pl.nameIconLists.contains(args[0])){
+						pl.nameIcon.put(p.getUniqueId(), args[0]);
+					
+					} else {
+						p.sendMessage(args[0]+ " is not a vaild or supported icon.");
+					}
+					
+					//set users displayName
+					pl.setUserDisplayName(p.getUniqueId());
+					
+				} else {
+					p.sendMessage(ChatColor.RED + "You do not have permission to do that.");
+				}
+			}
+		return true;	
+		}
+		
+		//namecolor commmand
 		if (cmd.getName().equalsIgnoreCase("namecolor")) {
 			if(args.length <=0){
 				p.sendMessage(ChatColor.DARK_GRAY + "the" + ChatColor.DARK_RED.toString() + ChatColor.BOLD.toString() + "Last" + ChatColor.RED + "Hero" + ChatColor.YELLOW + " - NameColor");
@@ -83,20 +119,35 @@ public class commandListener implements CommandExecutor{
 						p.sendMessage(pl.convertColor(args[0]).toString() + "is not a vaild or supported color.");
 					}
 				} else {
-					p.sendMessage(pl.convertColor(args[0]).toString() + args[0] + ChatColor.RED + "You do not have permission to do that.");
+					p.sendMessage(ChatColor.RED + "You do not have permission to do that.");
 				}
 			}
 			
 			return true;
 		}
 		
+		
+		
 		if (cmd.getName().equalsIgnoreCase("test")) {
-			p.sendMessage("♥");
+			p.sendMessage(pl.parseUTF8((String)"\u2660"));
+			p.sendMessage(pl.parseUTF8((String)"\u2600"));
+			p.sendMessage(pl.parseUTF8((String)"\u2603"));
+			p.sendMessage(pl.parseUTF8((String)"\u2604"));
+			p.sendMessage(pl.parseUTF8((String)"\u2605"));
+			p.sendMessage(pl.parseUTF8((String)"\u2606"));
+			p.sendMessage(pl.parseUTF8((String)"\u260E"));
+			p.sendMessage(pl.parseUTF8((String)"\u2618"));
+			p.sendMessage(pl.parseUTF8((String)"\u261A"));
+			p.sendMessage(pl.parseUTF8((String)"\u261B"));
+			p.sendMessage(pl.parseUTF8((String)"\u2620"));
 			
 		}
 		
 		
 		return false;
 	}
+	
+	
+	 
 
 }

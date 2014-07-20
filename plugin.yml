@@ -20,6 +20,9 @@ commands:
   test:
     description: test command
     aliases: [te]
+  nameicon:
+    description: adds name icon
+    aliases: [ni]
 
 permissions:
   thelasthero.thief:
@@ -41,5 +44,8 @@ permissions:
     description: blahblah
     default: false
   thelasthero.namecolor:
+    description: blahblah
+    default: false
+  thelasthero.nameicon:
     description: blahblah
     default: false

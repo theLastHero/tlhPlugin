@@ -42,8 +42,10 @@ public class tlhPlugin extends JavaPlugin {
 	// hashmaps
 	// ----------
 	public Map<UUID, Long> muted = new HashMap<UUID, Long>();// mute list hashmap
-	public HashMap<UUID, String> nameColor = new HashMap<UUID, String>();// mute list hashmap
-		
+	public HashMap<UUID, String> nameColor = new HashMap<UUID, String>();// namecolor list hashmap
+	public HashMap<UUID, String> nameIcon = new HashMap<UUID, String>();//
+	public HashMap<UUID, String> iconColor = new HashMap<UUID, String>();
+	
 	// longs & ints
 	// ---------------
 	public long timeMuted = 5000; // How long they muted for at login
@@ -63,6 +65,7 @@ public class tlhPlugin extends JavaPlugin {
 	//-------
 	public static tlhPlugin instance;
 	public List<String> nameColorLists = new ArrayList<String>();
+	public List<String> nameIconLists = new ArrayList<String>();
 	
 	// -------------------------------------------------------------------------------------
 	// onDisable
@@ -71,13 +74,6 @@ public class tlhPlugin extends JavaPlugin {
 	public void onDisable() {
 		// Display disabled message to console
 		getLogger().info("===[tlh]=== tlhPlugin Disabled ===");
-		
-		try {
-			SLAPI.save(nameColor,"plugins/thelasthero/example.bin");
-	            } catch(Exception e) {
-	                 e.printStackTrace();
-	            }
-		
 		
 	}
 	
@@ -100,6 +96,7 @@ public class tlhPlugin extends JavaPlugin {
 		getCommand("spawn").setExecutor(new commandListener(this));
 		getCommand("shops").setExecutor(new commandListener(this));
 		getCommand("namecolor").setExecutor(new commandListener(this));
+		getCommand("nameicon").setExecutor(new commandListener(this));
 		getCommand("test").setExecutor(new commandListener(this));
 		
 		//set spawn point
@@ -126,13 +123,27 @@ public class tlhPlugin extends JavaPlugin {
 		nameColorLists.add("dark_green");
 		nameColorLists.add("dark_purple");
 		nameColorLists.add("dark_red");
-		
+		 
+		 //list of icons
+		 nameIconLists.add("heart");
+		 nameIconLists.add("diamond");
+		 nameIconLists.add("spade");
+		 nameIconLists.add("club");
+		 nameIconLists.add("smiley");
+		 
 		 try {
 				nameColor = SLAPI.load("plugins/thelasthero/namecolor.bin");
 		            } catch(Exception e) {
 		                //handle the exception
 		                e.printStackTrace();
 		            }
+		 try {
+				nameIcon = SLAPI.load("plugins/thelasthero/nameicon.bin");
+		            } catch(Exception e) {
+		                //handle the exception
+		                e.printStackTrace();
+		            }
+		 
 		
 	}
 	
@@ -204,51 +215,103 @@ public class tlhPlugin extends JavaPlugin {
 		
 		Player p = Bukkit.getServer().getPlayer(uuid);
 		
+		//setup playerName
+		String playerName = p.getName();
+		
 		//setup prefix
-		String namePrefix = thiefPrefix;
+		//-----------------
+		String namePrefixString = thiefPrefix;
 		
 		if(p.hasPermission("thelasthero.thief")){
-			namePrefix = thiefPrefix;
+			namePrefixString = thiefPrefix;
 		 }
 		 if(p.hasPermission("thelasthero.citizen")){
-			namePrefix = citizenPrefix;
+			 namePrefixString = citizenPrefix;
 		 }
 		 if(p.hasPermission("thelasthero.protector")){
-			namePrefix = protectorPrefix;
+			 namePrefixString = protectorPrefix;
 		 }
 		 if(p.hasPermission("thelasthero.doctor")){
-			namePrefix = doctorPrefix;
+			 namePrefixString = doctorPrefix;
 		 }
 		 if(p.hasPermission("thelasthero.leader")){
-			namePrefix = leaderPrefix;
+			 namePrefixString = leaderPrefix;
 		 }
 		 if(p.hasPermission("thelasthero.hero")){
-			namePrefix = heroPrefix;
+			 namePrefixString = heroPrefix;
 		 }
+		 //----------------
+		 
 		 
 		 //setup nameColor
-		 String pName = "";
-		 
+		 //----------------
+		 String nameColorString = "white";
 		 if (nameColor.containsKey(p.getUniqueId())){
-			 pName = convertColor(nameColor.get(p.getUniqueId()));
+			 nameColorString = nameColor.get(p.getUniqueId());
 		 } 
 		 
-		 //set displayName
-		 p.setDisplayName(namePrefix + pName + p.getName().toString() + ChatColor.WHITE);	 
+		 nameColorString = convertColor(nameColorString);
+		 //------------------
 		 
-		 String tabName = pName + p.getName().toString();
+		 
+		 //setup nameIcon
+		 //------------------
+		 String nameIconString = "";
+		 if (nameIcon.containsKey(p.getUniqueId())){
+			 nameIconString = nameIcon.get(p.getUniqueId());
+		 }
+		 
+		 nameIconString = convertIcon(nameIconString);
+		 
+		 
+		 //------------------
+		 
+		 
+		 
+		 //setup displayName
+		 //------------------
+		 String displayNameString = "";
+		 displayNameString = namePrefixString + ChatColor.WHITE.toString() + nameIconString + nameColorString + playerName + ChatColor.WHITE.toString() + nameIconString;
+		 
+		 
+		 //setup tabName
+		 //------------------
+		 String tabName = "";
+		 tabName = nameColorString + playerName;
+		 
+		 if (tabName.length() > 16){
+			 tabName = tabName.substring(0,16);
+		 }
+		 
+		 
+		 //set displayname in game
+		 p.setDisplayName(displayNameString);
+		 //set tab list name in game
+		 p.setPlayerListName(tabName);
+		 //set nametag in game
+		 TagAPI.refreshPlayer(p.getPlayer());
+		 
+		 
+		 /*
+		 p.setDisplayName(namePrefix + cName + p.getName().toString() + ChatColor.WHITE);	 
+		 
+		 String tabName = cName + p.getName().toString();
 		 
 		 if (tabName.length() > 16){
 			 tabName = tabName.substring(0, 16);
 			}
 		 
-		 p.setPlayerListName(tabName);
 		 
-		 TagAPI.refreshPlayer(p.getPlayer());
 		 
+		 */
 		 
 			try {
 				SLAPI.save(nameColor,"plugins/thelasthero/namecolor.bin");
+		            } catch(Exception e) {
+		                 e.printStackTrace();
+		            }
+			try {
+				SLAPI.save(nameIcon,"plugins/thelasthero/nameicon.bin");
 		            } catch(Exception e) {
 		                 e.printStackTrace();
 		            }
@@ -300,6 +363,33 @@ public class tlhPlugin extends JavaPlugin {
 	}
 	
 	
+	// -------------------------------------------------------------------------------------
+	// convertColor
+	// -------------------------------------------------------------------------------------
+	public String convertIcon(String iconString){
+		
+		//get color into a string
+		String returnIcon = "";
+	 
+		if (iconString.equalsIgnoreCase("heart")){
+			returnIcon = parseUTF8((String)"\u2665");
+		}
+		if (iconString.equalsIgnoreCase("diamond")){
+			returnIcon = parseUTF8((String)"\u2666");
+		}
+		if (iconString.equalsIgnoreCase("spade")){
+			returnIcon = parseUTF8((String)"\u2660");
+		}
+		if (iconString.equalsIgnoreCase("club")){
+			returnIcon = parseUTF8((String)"\u2663");
+		}
+		if (iconString.equalsIgnoreCase("smiley")){
+			returnIcon = parseUTF8((String)"\u263A");
+		}
+			return returnIcon;
+		}
+			
+	
 	public void save(HashMap<UUID, String> nameColor, String path) {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
@@ -312,6 +402,119 @@ public class tlhPlugin extends JavaPlugin {
 		}
 	}
 
+	
+	public String parseUTF8(String instr)
+	  {
+	    char[] in = instr.toCharArray();
+	    int len = in.length;
+	    int off = 0;
+	    char[] convtBuf = new char[len];
+	    
+	    char[] out = convtBuf;
+	    int outLen = 0;
+	    int end = off + len;
+	    while (off < end)
+	    {
+	      char aChar = in[(off++)];
+	      if (aChar == '\\')
+	      {
+	        aChar = in[(off++)];
+	        if (aChar == 'u')
+	        {
+	          int value = 0;
+	          for (int i = 0; i < 4; i++)
+	          {
+	            aChar = in[(off++)];
+	            switch (aChar)
+	            {
+	            case '0': 
+	            case '1': 
+	            case '2': 
+	            case '3': 
+	            case '4': 
+	            case '5': 
+	            case '6': 
+	            case '7': 
+	            case '8': 
+	            case '9': 
+	              value = (value << 4) + aChar - 48;
+	              break;
+	            case 'a': 
+	            case 'b': 
+	            case 'c': 
+	            case 'd': 
+	            case 'e': 
+	            case 'f': 
+	              value = (value << 4) + 10 + aChar - 97;
+	              break;
+	            case 'A': 
+	            case 'B': 
+	            case 'C': 
+	            case 'D': 
+	            case 'E': 
+	            case 'F': 
+	              value = (value << 4) + 10 + aChar - 65;
+	              break;
+	            case ':': 
+	            case ';': 
+	            case '<': 
+	            case '=': 
+	            case '>': 
+	            case '?': 
+	            case '@': 
+	            case 'G': 
+	            case 'H': 
+	            case 'I': 
+	            case 'J': 
+	            case 'K': 
+	            case 'L': 
+	            case 'M': 
+	            case 'N': 
+	            case 'O': 
+	            case 'P': 
+	            case 'Q': 
+	            case 'R': 
+	            case 'S': 
+	            case 'T': 
+	            case 'U': 
+	            case 'V': 
+	            case 'W': 
+	            case 'X': 
+	            case 'Y': 
+	            case 'Z': 
+	            case '[': 
+	            case '\\': 
+	            case ']': 
+	            case '^': 
+	            case '_': 
+	            case '`': 
+	            default: 
+	              throw new IllegalArgumentException("Malformed \\uxxxx encoding.");
+	            }
+	          }
+	          out[(outLen++)] = ((char)value);
+	        }
+	        else
+	        {
+	          if (aChar == 't') {
+	            aChar = '\t';
+	          } else if (aChar == 'r') {
+	            aChar = '\r';
+	          } else if (aChar == 'n') {
+	            aChar = '\n';
+	          } else if (aChar == 'f') {
+	            aChar = '\f';
+	          }
+	          out[(outLen++)] = aChar;
+	        }
+	      }
+	      else
+	      {
+	        out[(outLen++)] = aChar;
+	      }
+	    }
+	    return new String(out, 0, outLen);
+	  }
 	
 	
 }
