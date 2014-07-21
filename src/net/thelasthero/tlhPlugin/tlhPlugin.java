@@ -45,6 +45,11 @@ public class tlhPlugin extends JavaPlugin {
 	public HashMap<UUID, String> nameColor = new HashMap<UUID, String>();// namecolor list hashmap
 	public HashMap<UUID, String> nameIcon = new HashMap<UUID, String>();//
 	public HashMap<UUID, String> iconColor = new HashMap<UUID, String>();
+	public HashMap<UUID, String> soundsPlayerHitAnything = new HashMap<UUID, String>();
+	public HashMap<UUID, String> soundsPlayerHitPlayer = new HashMap<UUID, String>();
+	public HashMap<UUID, String> soundsPlayerHitMob = new HashMap<UUID, String>();
+	public HashMap<UUID, String> soundsPlayerKillPlayer = new HashMap<UUID, String>();
+	public HashMap<UUID, String> soundsPlayerKillMob = new HashMap<UUID, String>();
 	
 	// longs & ints
 	// ---------------
@@ -97,6 +102,7 @@ public class tlhPlugin extends JavaPlugin {
 		getCommand("shops").setExecutor(new commandListener(this));
 		getCommand("namecolor").setExecutor(new commandListener(this));
 		getCommand("nameicon").setExecutor(new commandListener(this));
+		getCommand("sounds").setExecutor(new commandListener(this));
 		getCommand("test").setExecutor(new commandListener(this));
 		
 		//set spawn point
@@ -129,7 +135,14 @@ public class tlhPlugin extends JavaPlugin {
 		 nameIconLists.add("diamond");
 		 nameIconLists.add("spade");
 		 nameIconLists.add("club");
+
 		 nameIconLists.add("smiley");
+		 nameIconLists.add("peace");
+		 nameIconLists.add("skull");
+		 nameIconLists.add("dharma");
+
+		 nameIconLists.add("star");
+		 nameIconLists.add("snowman");
 		 
 		 try {
 				nameColor = SLAPI.load("plugins/thelasthero/namecolor.bin");
@@ -143,7 +156,12 @@ public class tlhPlugin extends JavaPlugin {
 		                //handle the exception
 		                e.printStackTrace();
 		            }
-		 
+		 try {
+				iconColor = SLAPI.load("plugins/thelasthero/iconcolor.bin");
+		            } catch(Exception e) {
+		                //handle the exception
+		                e.printStackTrace();
+		            }
 		
 	}
 	
@@ -262,7 +280,17 @@ public class tlhPlugin extends JavaPlugin {
 		 }
 		 
 		 nameIconString = convertIcon(nameIconString);
+		 //------------------
 		 
+		 
+		 //setup iconVolor
+		 //------------------
+		 String iconColorString = "white";
+		 if (iconColor.containsKey(p.getUniqueId())){
+			 iconColorString = iconColor.get(p.getUniqueId());
+		 }
+		 
+		 iconColorString =  convertColor(iconColorString);
 		 
 		 //------------------
 		 
@@ -271,7 +299,7 @@ public class tlhPlugin extends JavaPlugin {
 		 //setup displayName
 		 //------------------
 		 String displayNameString = "";
-		 displayNameString = namePrefixString + ChatColor.WHITE.toString() + nameIconString + nameColorString + playerName + ChatColor.WHITE.toString() + nameIconString;
+		 displayNameString = namePrefixString + ChatColor.WHITE.toString() + iconColorString + nameIconString + nameColorString + playerName + ChatColor.WHITE.toString() + iconColorString + nameIconString;
 		 
 		 
 		 //setup tabName
@@ -312,6 +340,11 @@ public class tlhPlugin extends JavaPlugin {
 		            }
 			try {
 				SLAPI.save(nameIcon,"plugins/thelasthero/nameicon.bin");
+		            } catch(Exception e) {
+		                 e.printStackTrace();
+		            }
+			try {
+				SLAPI.save(nameIcon,"plugins/thelasthero/iconcolor.bin");
 		            } catch(Exception e) {
 		                 e.printStackTrace();
 		            }
@@ -364,7 +397,7 @@ public class tlhPlugin extends JavaPlugin {
 	
 	
 	// -------------------------------------------------------------------------------------
-	// convertColor
+	// convertIcon
 	// -------------------------------------------------------------------------------------
 	public String convertIcon(String iconString){
 		
@@ -373,23 +406,33 @@ public class tlhPlugin extends JavaPlugin {
 	 
 		if (iconString.equalsIgnoreCase("heart")){
 			returnIcon = parseUTF8((String)"\u2665");
-		}
-		if (iconString.equalsIgnoreCase("diamond")){
+		}else if (iconString.equalsIgnoreCase("diamond")){
 			returnIcon = parseUTF8((String)"\u2666");
-		}
-		if (iconString.equalsIgnoreCase("spade")){
+		}else if (iconString.equalsIgnoreCase("spade")){
 			returnIcon = parseUTF8((String)"\u2660");
-		}
-		if (iconString.equalsIgnoreCase("club")){
+		}else if (iconString.equalsIgnoreCase("club")){
 			returnIcon = parseUTF8((String)"\u2663");
-		}
-		if (iconString.equalsIgnoreCase("smiley")){
+		}else if (iconString.equalsIgnoreCase("smiley")){
 			returnIcon = parseUTF8((String)"\u263A");
+		}else if (iconString.equalsIgnoreCase("peace")){
+			returnIcon = parseUTF8((String)"\u262E");
+		}else if (iconString.equalsIgnoreCase("skull")){
+			returnIcon = parseUTF8((String)"\u2620");
+		}else if (iconString.equalsIgnoreCase("dharma")){
+			returnIcon = parseUTF8((String)"\u2638");
+		}else if (iconString.equalsIgnoreCase("star")){
+			returnIcon = parseUTF8((String)"\u2605");
+		}else if (iconString.equalsIgnoreCase("snowman")){
+			returnIcon = parseUTF8((String)"\u2603");
 		}
 			return returnIcon;
 		}
 			
 	
+
+	// -------------------------------------------------------------------------------------
+	// save
+	// -------------------------------------------------------------------------------------
 	public void save(HashMap<UUID, String> nameColor, String path) {
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
@@ -403,6 +446,10 @@ public class tlhPlugin extends JavaPlugin {
 	}
 
 	
+
+	// -------------------------------------------------------------------------------------
+	// parseUTF8
+	// -------------------------------------------------------------------------------------
 	public String parseUTF8(String instr)
 	  {
 	    char[] in = instr.toCharArray();

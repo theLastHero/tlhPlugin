@@ -202,7 +202,6 @@ public class playerListener implements Listener {
 	// -------------------------------------------------------------------------------------
 	// playerRespawn - Fires when a player quits the server.
 	// -------------------------------------------------------------------------------------
-		
     @EventHandler
     public boolean playerRespawn(PlayerRespawnEvent event) {
     event.setRespawnLocation(pl.spawnLocation);

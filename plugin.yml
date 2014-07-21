@@ -23,6 +23,9 @@ commands:
   nameicon:
     description: adds name icon
     aliases: [ni]
+  sounds:
+    description: change sounds
+    aliases: [s]
 
 permissions:
   thelasthero.thief:

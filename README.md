@@ -46,7 +46,10 @@ Added UUID support
 
 Update build to 1.7.10
 
-Added /nameicon basic support
+Added /nameicon
+
+[- 21/july/2014 -] 
+Added /nameicon color change
 
 
  === TODO ===
