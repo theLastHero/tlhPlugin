@@ -11,22 +11,35 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import net.milkbowl.vault.chat.Chat;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.kitteh.tag.TagAPI;
+
 
 
 /* 
@@ -37,7 +50,7 @@ import org.kitteh.tag.TagAPI;
  * 
  * 
  */
-public class tlhPlugin extends JavaPlugin {
+public class tlhPlugin extends JavaPlugin{
 	
 	// hashmaps
 	// ----------
@@ -71,6 +84,26 @@ public class tlhPlugin extends JavaPlugin {
 	public static tlhPlugin instance;
 	public List<String> nameColorLists = new ArrayList<String>();
 	public List<String> nameIconLists = new ArrayList<String>();
+	public List<String> soundLists = new ArrayList<String>();
+	public List<String> changeSoundLists = new ArrayList<String>();
+	
+	public static Permission permission = null;
+    public static Economy economy = null;
+    public static Chat chat = null;
+	
+    
+    // -------------------------------------------------------------------------------------
+ 	// setupEconomy
+ 	// -------------------------------------------------------------------------------------	
+ 	private boolean setupEconomy()
+    {
+        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+        if (economyProvider != null) {
+            economy = economyProvider.getProvider();
+        }
+
+        return (economy != null);
+    }
 	
 	// -------------------------------------------------------------------------------------
 	// onDisable
@@ -89,7 +122,7 @@ public class tlhPlugin extends JavaPlugin {
 	@Override
 	public void onEnable() {
 
-		instance = this;
+		//instance = this;
 		
 		// Display enabled message to console
 		getLogger().info("===[tlh]=== tlhPlugin Enabled ===");
@@ -102,7 +135,7 @@ public class tlhPlugin extends JavaPlugin {
 		getCommand("shops").setExecutor(new commandListener(this));
 		getCommand("namecolor").setExecutor(new commandListener(this));
 		getCommand("nameicon").setExecutor(new commandListener(this));
-		getCommand("sounds").setExecutor(new commandListener(this));
+		//getCommand("sounds").setExecutor(new commandListener(this));
 		getCommand("test").setExecutor(new commandListener(this));
 		
 		//set spawn point
@@ -112,6 +145,9 @@ public class tlhPlugin extends JavaPlugin {
 		//shopSpawnA = new Location(Bukkit.getWorld("playerShops"), 0, 66, 0, (float) -0.14778212, (float) 0);
 		//shopSpawnB = new Location(Bukkit.getWorld("playerShops"), 0, 66, 0, (float) -0.14778212, (float) 0);
 		//shopSpawnC = new Location(Bukkit.getWorld("playerShops"), 0, 66, 0, (float) -0.14778212, (float) 0);
+		
+		//
+		setupEconomy();
 
 		//list of color names for /namecolor command
 		nameColorLists.add("aqua");
@@ -130,19 +166,32 @@ public class tlhPlugin extends JavaPlugin {
 		nameColorLists.add("dark_purple");
 		nameColorLists.add("dark_red");
 		 
-		 //list of icons
-		 nameIconLists.add("heart");
-		 nameIconLists.add("diamond");
-		 nameIconLists.add("spade");
-		 nameIconLists.add("club");
+		 
+		//list of icons
+		nameIconLists.add("heart");
+		nameIconLists.add("diamond");
+		nameIconLists.add("spade");
+		nameIconLists.add("club");
+		nameIconLists.add("smiley");
+		nameIconLists.add("peace");
+		nameIconLists.add("skull");
+		nameIconLists.add("dharma");
+		nameIconLists.add("star");
+		nameIconLists.add("snowman");
+		 
+		
 
-		 nameIconLists.add("smiley");
-		 nameIconLists.add("peace");
-		 nameIconLists.add("skull");
-		 nameIconLists.add("dharma");
-
-		 nameIconLists.add("star");
-		 nameIconLists.add("snowman");
+		//list of changableSounds
+		changeSoundLists.add("onhit");
+		changeSoundLists.add("onhitplayer");
+		changeSoundLists.add("onhitmob");
+		changeSoundLists.add("onkillplayer");
+		changeSoundLists.add("onkillmob");
+		
+		//list of sounds
+		soundLists.add("xp_orb");
+		 
+		 
 		 
 		 try {
 				nameColor = SLAPI.load("plugins/thelasthero/namecolor.bin");
@@ -163,7 +212,29 @@ public class tlhPlugin extends JavaPlugin {
 		                e.printStackTrace();
 		            }
 		
+		 RunWeather();
+		 
 	}
+	
+	
+	public void RunWeather(){
+		
+		
+		BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+        scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
+
+			@Override
+			public void run() {
+				
+				Bukkit.getWorld("playerShops").setStorm(false);
+				Bukkit.getWorld("playerShops").setThundering(false);
+				Bukkit.getWorld("playerShops").setTime(6000);
+			}
+        
+        
+        }, 150, 5);
+	}
+	
 	
 	
 	// -------------------------------------------------------------------------------------
@@ -344,7 +415,7 @@ public class tlhPlugin extends JavaPlugin {
 		                 e.printStackTrace();
 		            }
 			try {
-				SLAPI.save(nameIcon,"plugins/thelasthero/iconcolor.bin");
+				SLAPI.save(iconColor,"plugins/thelasthero/iconcolor.bin");
 		            } catch(Exception e) {
 		                 e.printStackTrace();
 		            }
@@ -562,6 +633,10 @@ public class tlhPlugin extends JavaPlugin {
 	    }
 	    return new String(out, 0, outLen);
 	  }
+	
+	
+
+	
 	
 	
 }

@@ -5,7 +5,7 @@ author: judgetread
 authors: [judgetread] 
 website: http://thelasthero.net
 main: net.thelasthero.tlhPlugin.tlhPlugin
-Depends: [TagAPI]
+depends: [TagAPI, Vault]
 
 commands:
   spawn:
@@ -23,9 +23,6 @@ commands:
   nameicon:
     description: adds name icon
     aliases: [ni]
-  sounds:
-    description: change sounds
-    aliases: [s]
 
 permissions:
   thelasthero.thief:

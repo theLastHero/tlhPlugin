@@ -10,6 +10,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerInteractEvent;
+
 import net.thelasthero.tlhPlugin.playerListener;
 
 public class commandListener implements CommandExecutor{
@@ -166,10 +169,42 @@ public class commandListener implements CommandExecutor{
 		}
 		
 		
-		
+		//SOUNDS
+		//----------------------
 		if (cmd.getName().equalsIgnoreCase("sounds")) {
+			if(args.length <=1){
+				p.sendMessage(" ");
+				p.sendMessage(" ");
+				p.sendMessage(ChatColor.DARK_GRAY + "the" + ChatColor.DARK_RED.toString() + ChatColor.BOLD.toString() + "Last" + ChatColor.RED + "Hero" + ChatColor.YELLOW + " - Sounds");
+				p.sendMessage(ChatColor.GREEN + "--------------");
+				p.sendMessage(" ");
+				p.sendMessage(ChatColor.GREEN + "/sounds reset " + ChatColor.GRAY + "<- Reset to all sounds.");
+		        p.sendMessage(ChatColor.GREEN + "/namecolor <SOUND_TO_CHANGE> <SOUND_TO_USE>" + ChatColor.GRAY + "<- Change to color.");
+		        p.sendMessage(ChatColor.WHITE + "Changeable Sounds: " + ChatColor.GRAY + "onhit, onhitplayer, onhitmob, onkillplayer, onkillmob");
+		        
+		        p.sendMessage(ChatColor.WHITE + "Useable Sounds: " + ChatColor.GRAY + "xp_orb, ");
+		        
+			} else {
+				
+				if(pl.changeSoundLists.contains(args[0]) && pl.soundLists.contains(args[1])){
 			
+				String changeSound = args[0];
+				String useSound = args[1];
+				
+				if (changeSound.equalsIgnoreCase("onhit")){
+					pl.soundsPlayerHitAnything.put(p.getUniqueId(), useSound);
+					
+				}
+				
+				
+				
+				}
+				
+			
+			}
 		}
+		
+		
 		
 		
 		if (cmd.getName().equalsIgnoreCase("test")) {
@@ -192,6 +227,8 @@ public class commandListener implements CommandExecutor{
 	}
 	
 	
+
+		
 	 
 
 }
