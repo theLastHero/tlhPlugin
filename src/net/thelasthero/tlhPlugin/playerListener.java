@@ -2,32 +2,26 @@ package net.thelasthero.tlhPlugin;
 
 import java.util.UUID;
 
-import net.milkbowl.vault.Vault;
-import net.milkbowl.vault.VaultEco;
-import net.milkbowl.vault.economy.plugins.Economy_3co;
-
+import me.confuser.barapi.BarAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.block.Sign;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Animals;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.kitteh.tag.AsyncPlayerReceiveNameTagEvent;
 
 @SuppressWarnings("deprecation")
@@ -40,13 +34,53 @@ public class playerListener implements Listener {
 	}
 
 	
+	// -------------------------------------------------------------------------------------
+	// addPerm
+	// -------------------------------------------------------------------------------------
 	public void addPerm(String perm, UUID playerUUID){
 		
 		Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),  "pex user " + Bukkit.getPlayer(playerUUID).getName() + " add " + perm);
 	}
 	
 	
+	// -------------------------------------------------------------------------------------
+	// addPermTimed
+	// -------------------------------------------------------------------------------------
+	public void addPermTimed(String perm, UUID playerUUID, String seconds){
+		
+		Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(),  "pex user " + Bukkit.getPlayer(playerUUID).getName() + "timed add " + perm  + " " + seconds);
+	}
 	
+	
+	// -------------------------------------------------------------------------------------
+	// onEnitityDeath
+	// -------------------------------------------------------------------------------------
+	@EventHandler(priority=EventPriority.HIGHEST)
+	public void onEntityDeath(EntityDeathEvent e) {
+		
+		
+		 Entity damager = e.getEntity().getKiller();
+		 Entity damagee = e.getEntity();
+		 
+		 //if its not kileld by a player then return
+		 if ((damager instanceof Player) && ((damagee instanceof Animals) || (damagee instanceof Monster))) {
+		 if(Bukkit.getPlayer(damager.getUniqueId()).hasPermission("thelasthero.doublexp")){
+		 
+			 Player p = (Player) damager;
+			 e.setDroppedExp((e.getDroppedExp()*2));
+			 p.getWorld().playEffect(p.getLocation(), Effect.SMOKE, 0);
+			 //p.sendMessage("DOUBLE XP: "+e.getDroppedExp() +" : " + (e.getDroppedExp()*2));
+			 BarAPI.setMessage(p,ChatColor.AQUA.toString()+ChatColor.BOLD.toString()+"DOUBLE XP APPLIED",1);
+		 
+		 }
+		 }
+        
+    }
+	
+	
+	// -------------------------------------------------------------------------------------
+	// onPlayerInteractEvent
+	// -------------------------------------------------------------------------------------
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event) {
 		
@@ -59,11 +93,10 @@ public class playerListener implements Listener {
 		if (event.getClickedBlock().getState() instanceof Sign) {
             Sign s = (Sign) event.getClickedBlock().getState();
             
-            
             if(s.getLine(0).equalsIgnoreCase(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "theLastHero")){
-            	
+            
             	if(s.getLine(1).equalsIgnoreCase(ChatColor.DARK_PURPLE.toString() + "Buy-A-Perk")){
-            		
+            		    		
             		int cost = Integer.parseInt(s.getLine(3).replace("$",""));
             		
             		if(pl.economy.getBalance(p.getName()) < cost)
@@ -74,7 +107,7 @@ public class playerListener implements Listener {
             		
             		// BACK
             		//------------
-            		if (s.getLine(2).equalsIgnoreCase(ChatColor.RED+"/back")){
+            		if (s.getLine(2).contains("/back")){
             			String perm = "essentials.back";
             			if(p.hasPermission(perm)){
             				p.sendMessage(ChatColor.GREEN + " You already have this command available to use.");	
@@ -89,7 +122,7 @@ public class playerListener implements Listener {
             		
             		// workbench
             		//------------
-            		if (s.getLine(2).equalsIgnoreCase(ChatColor.RED+"/workbench")){
+            		if (s.getLine(2).contains("/workbench")){
             			String perm = "essentials.workbench";
             			if(p.hasPermission(perm)){
             				p.sendMessage(ChatColor.GREEN + " You already have this command available to use.");	
@@ -103,7 +136,7 @@ public class playerListener implements Listener {
             		
             		// enderchest
             		//------------
-            		if (s.getLine(2).equalsIgnoreCase(ChatColor.RED+"/enderchest")){
+            		if (s.getLine(2).contains("/enderchest")){
             			String perm = "essentials.enderchest";
             			if(p.hasPermission(perm)){
             				p.sendMessage(ChatColor.GREEN + " You already have this command available to use.");	
@@ -118,7 +151,7 @@ public class playerListener implements Listener {
 
             		// top
             		//------------
-            		if (s.getLine(2).equalsIgnoreCase(ChatColor.RED+"/top")){
+            		if (s.getLine(2).contains("/top")){
             			String perm = "essentials.top";
             			if(p.hasPermission(perm)){
             				p.sendMessage(ChatColor.GREEN + " You already have this command available to use.");	
@@ -133,7 +166,7 @@ public class playerListener implements Listener {
             		
             		// near
             		//------------
-            		if (s.getLine(2).equalsIgnoreCase(ChatColor.RED+"/near")){
+            		if (s.getLine(2).contains("/near")){
             			String perm = "essentials.near";
             			if(p.hasPermission(perm)){
             				p.sendMessage(ChatColor.GREEN + " You already have this command available to use.");	
@@ -147,7 +180,7 @@ public class playerListener implements Listener {
 
             		// recipe
             		//------------
-            		if (s.getLine(2).equalsIgnoreCase(ChatColor.RED+"/recipe")){
+            		if (s.getLine(2).contains("/recipe")){
             			String perm = "essentials.recipe";
             			if(p.hasPermission(perm)){
             				p.sendMessage(ChatColor.GREEN + " You already have this command available to use.");	
@@ -162,7 +195,7 @@ public class playerListener implements Listener {
             		
             		// heal
             		//------------
-            		if (s.getLine(2).equalsIgnoreCase(ChatColor.RED+"/heal")){
+            		if (s.getLine(2).contains("/heal")){
             			String perm = "essentials.heal";
             			if(p.hasPermission(perm)){
             				p.sendMessage(ChatColor.GREEN + " You already have this command available to use.");	
@@ -177,7 +210,7 @@ public class playerListener implements Listener {
             		
             		// feed
             		//------------
-            		if (s.getLine(2).equalsIgnoreCase(ChatColor.RED+"/feed")){
+            		if (s.getLine(2).contains("/feed")){
             			String perm = "essentials.feed";
             			if(p.hasPermission(perm)){
             				p.sendMessage(ChatColor.GREEN + " You already have this command available to use.");	
@@ -188,22 +221,52 @@ public class playerListener implements Listener {
             					}
             			return;
             		}
+
+            		
+            		// stack
+            		//------------
+            		if (s.getLine(2).contains("/stack")){
+            			//String perm = "essentials.feed";
+            			if(p.hasPermission("worldguard.stack.illegitimate")){
+            				p.sendMessage(ChatColor.GREEN + " You already have this command available to use.");	
+            			} else {
+            				pl.economy.withdrawPlayer(p.getName(), cost);
+            				addPerm("worldguard.stack", p.getUniqueId());
+            				addPerm("worldguard.stack.illegitimate", p.getUniqueId());
+            				p.sendMessage(ChatColor.GREEN + " The command " + ChatColor.RED + "/stack " + ChatColor.GREEN + "has been added to your account.");
+            					}
+            			return;
+            		}
             		
 
             		// mineSpanwers
             		//------------
-            		if (s.getLine(2).equalsIgnoreCase(ChatColor.RED+"mine spawners")){
+            		if (s.getLine(2).contains("mine spawners")){
             			String perm = "silkspawners.silkdrop.*";
             			if(p.hasPermission(perm)){
             				p.sendMessage(ChatColor.GREEN + " You already have this available to use.");	
             			} else {
             				pl.economy.withdrawPlayer(p.getName(), cost);
             				addPerm(perm, p.getUniqueId());
-            				p.sendMessage(ChatColor.GREEN + " You can now minespaner using a cilk touch pckaxe!");
+            				p.sendMessage(ChatColor.GREEN + " You can now mine spawners using a silk touch pickaxe!");
             					}
             			return;
             		}
             		
+
+            		// doubleXP
+            		//------------
+            		if (s.getLine(2).contains("Double XP")){
+            			String perm = "thelasthero.doublexp";
+            			if(p.hasPermission(perm)){
+            				p.sendMessage(ChatColor.GREEN + " You already have this available to use.");	
+            			} else {
+            				pl.economy.withdrawPlayer(p.getName(), cost);
+            				addPermTimed(perm, p.getUniqueId(),"86400");
+            				p.sendMessage(ChatColor.GREEN + " You will gain double XP on kills, for 24 hours!");
+            					}
+            			return;
+            		}
             		
             		
             		

@@ -5,7 +5,7 @@ author: judgetread
 authors: [judgetread] 
 website: http://thelasthero.net
 main: net.thelasthero.tlhPlugin.tlhPlugin
-depends: [TagAPI, Vault]
+depends: [TagAPI, Vault, BarAPI]
 
 commands:
   spawn:
@@ -47,5 +47,8 @@ permissions:
     description: blahblah
     default: false
   thelasthero.nameicon:
+    description: blahblah
+    default: false
+    thelasthero.doublexp:
     description: blahblah
     default: false
